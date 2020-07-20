@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>My Geocode App</title>
+</head>
+<body>
+    <script>
+//call geocode
+geocode()
+        function geocode(){
+            const location  = 'ismay av homebush, nsw 2140'
+            axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
+                params:{
+                    address: location,
+                    key:'AIzaSyDWxw4EVxR5CT6L84mLIWdDrefNK6rwV10'
+                }
+            })
+            .then (function(response){
+                console.log(response)
+                //formatted address
+                var formattedAddress = response.data.results[0].formatted_address
+                var formattedAddressOupt =`
+                <ul class="list-group">
+                <li class ="list-group-item">${formattedAddress}</li>
+                </ul>`
+                // output to app
+
+            })
+            .catch(function(error){
+                console.log(error)
+            })
+        }
+    </script>
+</body>
+</html>
