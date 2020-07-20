@@ -8,11 +8,15 @@
     <title>My Geocode App</title>
 </head>
 <body>
+    <div class="container">
+    <div id = 'formatted-address'></div>
+    </div>
+    <div id="address-components"></div> 
     <script>
 //call geocode
 geocode()
         function geocode(){
-            const location  = 'ismay av homebush, nsw 2140'
+            const location  = '1 ismay av homebush, nsw 2140'
             axios.get('https://maps.googleapis.com/maps/api/geocode/json',{
                 params:{
                     address: location,
@@ -27,8 +31,21 @@ geocode()
                 <ul class="list-group">
                 <li class ="list-group-item">${formattedAddress}</li>
                 </ul>`
-                // output to app
 
+                //address components
+                const addressComponents = response.data.results[0].address_components
+                let addressComponentsOutPut ='<ul class="list-group"'
+                addressComponents.forEach(element => {
+                    addressComponentsOutPut+=`
+                    <li class = "list-group-item">
+                   <strong>${element.types[0]} </strong>:${element.long_name}
+                    </li>
+                    `
+                    
+                });
+                // output to app
+                document.querySelector('#formatted-address').innerHTML =formattedAddressOupt
+                document.querySelector('#address-components').innerHTML =addressComponentsOutPut
             })
             .catch(function(error){
                 console.log(error)
